@@ -21,6 +21,8 @@ class LondonNetwork:
                 # no grafo é adicionado um nó que guarda estas informações
                 self.graph.add_vertex(station_id, payload={
                                       'lat': latitude, 'lon': longitude, 'name': name})
+                self.station_info[station_id] = {
+                    'name': name, 'lat': latitude, 'lon': longitude}
 
     def connections(self, file_connections):
         with open(file_connections, 'r') as file:
@@ -45,19 +47,6 @@ class LondonNetwork:
                 name = data[1]
                 lines[line_id] = name
         return lines
-
-    def load_stations_info(self, file_stations):
-        """Lê o ficheiro e guarda info das estações (nome, coordenadas)."""
-        with open(file_stations, 'r') as file:
-            next(file)  # salta cabeçalho
-            for line in file:
-                data = line.strip().split(',')
-                station_id = data[0]
-                latitude = float(data[1])
-                longitude = float(data[2])
-                name = data[3]
-                self.station_info[station_id] = {
-                    'name': name, 'lat': latitude, 'lon': longitude}
 
     def calculate_distance(self, id1, id2):
         """Calcula a distância em km entre duas estações (fórmula Haversine)."""
