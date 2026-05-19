@@ -88,14 +88,30 @@ class LondonNetwork:
             edge_line[line] = edge_line[line]//2
         return edge_line
 
-    def mean_weight(self):
-        weighted_edges = []  # guardamos as informações numa lista
+        def mean_weight(self, weight='uniform'):
+        weighted_edges = []
+        seen = set()  # set é mais eficiente que lista para verificar duplicados
+
         for edges in self.graph._iter_edges():
-            for edge in edges:  # por cada aresta
-                weight = int(edge.get_info())  # vou buscar o seu peso
-                weighted_edges.append(weight)  # adicionar à lista
-        # soma total a dividir pelo total, e para evitar contar o mesmo peso duas vezes divido por 2
-        return sum(weighted_edges)/(len(weighted_edges)) // 2
+            for edge in edges:
+                u, v = edge.get_vs()
+                edge_id = frozenset([u, v])  # identifica a aresta pelos vértices, não pela linha
+                if edge_id in seen:
+                    continue
+                seen.add(edge_id)
+                if weight == 'uniform':  # weight aqui é o PARÂMETRO (não sobrescrito)
+                    w = 1
+                elif weight == 'distance':
+                    w = self.calculate_distance(u, v)
+                else:
+                     w = int(edge.get_info())
+
+                weighted_edges.append(w)  # append de w, não de weight
+
+        if not weighted_edges:  # FORA do loop
+            return 0
+
+        return sum(weighted_edges) / len(weighted_edges)  # FORA do loop
 
     def mean_degree(self):
         degree = []  # numa lista é guardado os graus de cada nó
