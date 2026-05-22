@@ -10,7 +10,8 @@ def main():
     metro = LondonNetwork()
     metro.stations(os.path.join(BASE_DIR, 'data', 'stations.csv'))
     metro.connections(os.path.join(BASE_DIR, 'data', 'connections.csv'))
-    print(f"Carregadas {metro.n_stations()} estações e {metro.n_edges()} ligações.\n")
+    print(
+        f"Carregadas {metro.n_stations()} estações e {metro.n_edges()} ligações.\n")
 
     while True:
         print("--- MENU PRINCIPAL ---")
@@ -28,7 +29,8 @@ def main():
                 nome_a = metro.station_info[id_a]['name']
                 nome_b = metro.station_info[id_b]['name']
                 dist = metro.calculate_distance(id_a, id_b)
-                print(f"\nDistância entre {nome_a} e {nome_b}: {dist:.2f} km\n")
+                print(
+                    f"\nDistância entre {nome_a} e {nome_b}: {dist:.2f} km\n")
             else:
                 print("\nID não encontrado!\n")
 
@@ -37,14 +39,14 @@ def main():
             print(f"  - Número de estações:    {metro.n_stations()}")
             print(f"  - Número de ligações:    {metro.n_edges()}")
             print(f"  - Grau médio:            {metro.mean_degree():.2f}")
-            print(f"  - Peso médio (uniform):  {metro.mean_weight('uniform'):.2f}")
-            print(f"  - Peso médio (distance): {metro.mean_weight('distance'):.2f} km\n")
+            print(f"  - Peso médio:            {metro.mean_weight():.2f}\n")
 
         elif opcao == '3':
             print("\nA gerar mapa...")
             metro.visualize(
                 os.path.join(BASE_DIR, 'data', 'lines.csv'),
-                output_file=os.path.join(BASE_DIR, 'visualizations', 'london_tube_map.html')
+                output_file=os.path.join(
+                    BASE_DIR, 'visualizations', 'london_tube_map.html')
             )
             print("Abre o ficheiro 'visualizations/london_tube_map.html' no browser!\n")
 
