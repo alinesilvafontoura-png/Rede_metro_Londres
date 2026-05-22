@@ -57,10 +57,10 @@ class LondonNetwork:
         return raio * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     def n_stations(self):
-        return self.graph.edge_count()  # número total de ligações
+        return self.graph.vertex_count()  # número total de estações
 
     def n_edges(self):
-        return self.graph.vertex_count()
+        return self.graph.edge_count()  # número total de ligações
 
     def n_edges_line(self):
         edge_line = {}
