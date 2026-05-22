@@ -173,4 +173,3 @@ if __name__ == "__main__":
     print(f"  Próprio  → custo={cost_own:.4f} | estações={n_own} | mudanças={ch_own}")
     print(f"  NetworkX → custo={cost_nx:.4f} | estações={n_nx} | mudanças={ch_nx}")
     print(f"  Caminhos iguais: {path_own == path_nx}")
-#bananananana
