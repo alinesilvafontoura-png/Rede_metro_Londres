@@ -1,2 +1,2 @@
 folium
-network
+networkx
