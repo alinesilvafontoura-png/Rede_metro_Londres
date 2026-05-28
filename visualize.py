@@ -1,5 +1,6 @@
 import folium
 
+
 class Visualize:
     def __init__(self, graph, station_info):
         self.graph = graph                  # grafo partilhado com LondonNetwork
@@ -20,7 +21,8 @@ class Visualize:
                 colour = '#' + data[2].strip().strip('"')
                 lines_info[line_id] = {'name': name, 'colour': colour}
 
-        mapa = folium.Map(location=[51.5074, -0.1278], zoom_start=11, tiles='CartoDB positron')
+        mapa = folium.Map(location=[51.5074, -0.1278],
+                          zoom_start=11, tiles='CartoDB positron')
 
         arestas_vistas = set()
         for edges_list in self.graph._iter_edges():
@@ -33,10 +35,13 @@ class Visualize:
                 arestas_vistas.add(edge_key)
                 if start not in self.station_info or end not in self.station_info:
                     continue
-                coord_start = [self.station_info[start]['lat'], self.station_info[start]['lon']]
-                coord_end = [self.station_info[end]['lat'], self.station_info[end]['lon']]
+                coord_start = [self.station_info[start]
+                               ['lat'], self.station_info[start]['lon']]
+                coord_end = [self.station_info[end]
+                             ['lat'], self.station_info[end]['lon']]
                 colour = lines_info.get(line_id, {}).get('colour', '#888888')
-                line_name = lines_info.get(line_id, {}).get('name', f'Line {line_id}')
+                line_name = lines_info.get(line_id, {}).get(
+                    'name', f'Line {line_id}')
                 folium.PolyLine(locations=[coord_start, coord_end], color=colour,
                                 weight=3, opacity=0.8, tooltip=line_name).add_to(mapa)
 
@@ -66,12 +71,15 @@ class Visualize:
         return mapa
 
     def visualize_path(self, path, file_lines, output_file='visualizations/simulation.html'):
-        mapa = self.visualize(file_lines, output_file=None)  # mapa base sem guardar
+        # mapa base sem guardar
+        mapa = self.visualize(file_lines, output_file=None)
 
         for i in range(len(path) - 1):
             u, v = path[i], path[i + 1]
-            coord_u = [self.station_info[u]['lat'], self.station_info[u]['lon']]
-            coord_v = [self.station_info[v]['lat'], self.station_info[v]['lon']]
+            coord_u = [self.station_info[u]['lat'],
+                       self.station_info[u]['lon']]
+            coord_v = [self.station_info[v]['lat'],
+                       self.station_info[v]['lon']]
             folium.PolyLine(locations=[coord_u, coord_v], color='yellow',
                             weight=6, opacity=1, tooltip="Caminho ótimo").add_to(mapa)
 
@@ -88,4 +96,47 @@ class Visualize:
         if output_file:
             mapa.save(output_file)
             print(f"Caminho guardado em: {output_file}")
+        return mapa
+
+    def visualize_mst(self, mst_edges, file_lines, output_file='visualizations/kruskal_mst.html'):
+        """Visualiza a MST sobreposta à rede original.
+        As arestas da MST ficam verdes e mais espessas.
+        As arestas da rede original mantêm as cores das linhas.
+        """
+        # Desenha a rede original primeiro (com as cores das linhas)
+        mapa = self.visualize(file_lines, output_file=None)
+
+        # Desenhar arestas da MST por cima (verde e mais espessas)
+        for u, v, edge, cost in mst_edges:
+            if u not in self.station_info or v not in self.station_info:
+                continue
+            coord_u = [self.station_info[u]['lat'],
+                       self.station_info[u]['lon']]
+            coord_v = [self.station_info[v]['lat'],
+                       self.station_info[v]['lon']]
+            folium.PolyLine(
+                locations=[coord_u, coord_v],
+                color='#00FF00',     # verde brilhante para a MST
+                weight=5,            # mais espesso que a rede original
+                opacity=1,
+                tooltip=f"MST: {self.station_info[u]['name']} → {self.station_info[v]['name']}"
+            ).add_to(mapa)
+
+        # Legenda para distinguir MST da rede original
+        legend_html = """<div style="position:fixed; top:30px; right:30px;
+            background-color:white; border:2px solid #00CC00; border-radius:8px;
+            padding:12px 16px; font-family:Arial,sans-serif; font-size:13px;
+            z-index:1000; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">
+            <b>🌲 Árvore Geradora Mínima (Kruskal)</b><br>
+            <span style="display:inline-block; width:30px; height:5px;
+            background-color:#00FF00; vertical-align:middle; margin-right:6px;
+            border-radius:2px;"></span>Arestas MST<br>
+            <span style="display:inline-block; width:30px; height:3px;
+            background-color:#888888; vertical-align:middle; margin-right:6px;
+            border-radius:2px;"></span>Rede original</div>"""
+        folium.Element(legend_html).add_to(mapa)
+
+        if output_file:
+            mapa.save(output_file)
+            print(f"MST guardada em: {output_file}")
         return mapa

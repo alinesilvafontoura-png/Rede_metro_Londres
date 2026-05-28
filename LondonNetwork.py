@@ -38,6 +38,10 @@ class LondonNetwork:
         # delega ao Visualize
         return self._visualizer.visualize_path(path, file_lines, output_file)
 
+    def visualize_mst(self, mst_edges, file_lines, output_file='visualizations/kruskal_mst.html'):
+        """Visualiza a Árvore Geradora Mínima sobreposta à rede."""
+        return self._visualizer.visualize_mst(mst_edges, file_lines, output_file)
+
     # ── métricas ───────────────────────────────────────────────────────
 
     def calculate_distance(self, id1, id2):
