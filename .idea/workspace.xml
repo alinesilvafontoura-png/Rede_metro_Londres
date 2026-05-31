@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="970e08fa-fbd7-4f8b-be8a-3dd9f877344f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/rede_de_metro_londres.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dijkstra.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Graph.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LondonNetwork.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/connections.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/lines.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/stations.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/read_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/visualize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualizations/london_tube_map.html" beforeDir="false" afterPath="$PROJECT_DIR$/visualizations/london_tube_map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualizations/simulation.html" beforeDir="false" afterPath="$PROJECT_DIR$/visualizations/simulation.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "alinesilvafontoura-png"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/alinesilvafontoura-png/Rede_metro_Londres.git",
+    "accountId": "ab82745e-366d-4840-9148-0710f406839b"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -86,16 +84,5 @@
       <updated>1778835348766</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/LondonNetwork.py</url>
-          <line>66</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
