@@ -157,7 +157,7 @@ kruskal.simulate(
 | `n_stations()`                                      | Número total de estações                                  |
 | `n_edges()`                                         | Número total de ligações                                  |
 | `n_edges_line()`                                    | Dicionário com o número de ligações por linha             |
-| `mean_weight()`                                     | Peso médio das arestas                                    |
+| `mean_weight(weight_type)` | Peso médio das arestas conforme a função de custo |
 | `mean_degree()`                                     | Grau médio das estações                                   |
 | `visualize(file_lines, output_file)`                | Gera mapa HTML da rede completa                           |
 | `visualize_path(path, file_lines, output_file)`     | Gera mapa com caminho destacado                           |

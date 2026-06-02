@@ -79,21 +79,40 @@ class LondonNetworkGraph:
             edge_line[line] = edge_line[line] // 2
         return edge_line
 
-    def mean_weight(self):
-        # Calcula o peso médio das arestas (média dos IDs das linhas)
+    def mean_weight(self, weight_type='distance'):
+        # Calcula o peso médio das arestas conforme a função de custo escolhida
         total = 0
         count = 0
         seen = set()
         for edges in self.graph._iter_edges():
             for edge in edges:
                 u, v = edge.get_vs()
-                # identifica a aresta pelos vértices
+                # identifica a aresta pelos vértices (evitar contagem dupla)
                 edge_id = frozenset([u, v])
                 if edge_id in seen:
                     continue
                 seen.add(edge_id)
-                total += int(edge.get_info())
+
+                if weight_type == 'uniform':
+                    total += 1
+                elif weight_type == 'distance':
+                    dist = self.calculate_distance(u, v)
+                    if dist is not None:
+                        total += dist
+                    # se dist for None, não conta esta aresta
+                    else:
+                        continue
+                elif weight_type == 'line_penalty':
+                    dist = self.calculate_distance(u, v)
+                    if dist is not None:
+                        total += dist + 5  # dist + alpha
+                    else:
+                        continue
+                else:
+                    total += 1
+
                 count += 1
+
         if count == 0:
             return 0
         return total / count
@@ -119,7 +138,8 @@ if __name__ == "__main__":
     print(f"Nº de estações: {network.n_stations()}")
     print(f"Nº de ligações: {network.n_edges()}")
     print(f"Grau médio: {network.mean_degree():.2f}")
-    print(f"Peso médio: {network.mean_weight():.2f}")
+    print(f"Peso médio (uniforme): {network.mean_weight('uniform'):.2f}")
+    print(f"Peso médio (distância): {network.mean_weight('distance'):.2f}")
     print(f"Ligações por linha: {network.n_edges_line()}")
 
     print("\n=== VISUALIZAÇÃO DA REDE ===")

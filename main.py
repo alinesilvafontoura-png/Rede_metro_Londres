@@ -39,7 +39,11 @@ def main():
             print(f"  - Número de estações:    {metro.n_stations()}")
             print(f"  - Número de ligações:    {metro.n_edges()}")
             print(f"  - Grau médio:            {metro.mean_degree():.2f}")
-            print(f"  - Peso médio:            {metro.mean_weight():.2f}\n")
+            print(
+                f"  - Peso médio (uniforme):  {metro.mean_weight('uniform'):.2f}")
+            print(
+                f"  - Peso médio (distância): {metro.mean_weight('distance'):.2f}")
+            print()
 
         elif opcao == '3':
             print("\nA gerar mapa...")
