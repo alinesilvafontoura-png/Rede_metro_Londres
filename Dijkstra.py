@@ -13,12 +13,20 @@ class Dijkstra:
         # acesso direto ao grafo interno da rede
         self._graph = london_network.graph
 
-    def count_lines(self, path):
+    def count_lines(self, path, lines_in_path=None):
 
         count = 0        # contador de mudanças de linha
         current = None   # linha atual
 
-        # percorre pares consecutivos do caminho
+        # se tiver as linhas do caminho (do Dijkstra próprio), usá-las diretamente
+        if lines_in_path is not None:
+            for line in lines_in_path:
+                if current is not None and line != current:
+                    count += 1
+                current = line
+            return count
+
+        # fallback: procurar a linha no grafo (pode ser impreciso com múltiplas arestas)
         for i in range(len(path) - 1):
 
             u, v = path[i], path[i + 1]
@@ -50,6 +58,8 @@ class Dijkstra:
 
         # guarda o vértice anterior para reconstruir o caminho
         previous = {v: None for v in self._graph._iter_vertex()}
+        # guarda a linha usada para chegar a cada vértice (para count_lines)
+        previous_line = {v: None for v in self._graph._iter_vertex()}
 
         # conjunto de vértices já processados
         visited = set()
@@ -114,8 +124,9 @@ class Dijkstra:
                 # encontrou caminho melhor
                 if new_cost < best_value[neighbor]:
                     best_value[neighbor] = new_cost
-                    # guarda antecessor
+                    # guarda antecessor e linha usada
                     previous[neighbor] = vertex
+                    previous_line[neighbor] = edge_line
                     # adiciona à queue
                     heapq.heappush(queue, (new_cost, neighbor, edge_line))
 
@@ -126,6 +137,7 @@ class Dijkstra:
         # reconstrução do caminho
         # -----------------------------
         path = []
+        lines_in_path = []   # linha usada em cada aresta do caminho
         node = end
         while node is not None:
             path.append(node)
@@ -134,7 +146,12 @@ class Dijkstra:
         # inverter:
         # destino -> origem  ==> origem -> destino
         path.reverse()
-        return path, best_value[end]
+
+        # reconstruir linhas do caminho
+        for i in range(len(path) - 1):
+            lines_in_path.append(previous_line[path[i + 1]])
+
+        return path, best_value[end], lines_in_path
 
     def dijkstra_nx(self, start, end, weight_type='uniform'):
         # NetworkX não suporta diretamente
@@ -203,6 +220,8 @@ class Dijkstra:
     def simulate(self, start, end, weight_type='uniform', use_nx=False):
 
         # escolher implementação
+        lines_in_path = None
+
         if use_nx:
 
             path, cost = self.dijkstra_nx(
@@ -213,7 +232,7 @@ class Dijkstra:
 
         else:
 
-            path, cost = self.dijkstra(
+            path, cost, lines_in_path = self.dijkstra(
                 start,
                 end,
                 weight_type
@@ -222,8 +241,8 @@ class Dijkstra:
         # nº de estações
         n_stations = len(path)
 
-        # nº de mudanças de linha
-        changes = self.count_lines(path)
+        # nº de mudanças de linha (usa linhas do caminho se disponível)
+        changes = self.count_lines(path, lines_in_path)
 
         # mostrar resultados
         print(

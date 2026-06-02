@@ -63,7 +63,7 @@ class Visualize:
                 background-color:{info['colour']}; border-radius:3px;
                 margin-right:6px; vertical-align:middle;"></span>{info['name']}</div>"""
         legend_html += "</div>"
-        folium.Element(legend_html).add_to(mapa)
+        mapa.get_root().html.add_child(folium.Element(legend_html))
 
         if output_file:
             mapa.save(output_file)
@@ -134,7 +134,7 @@ class Visualize:
             <span style="display:inline-block; width:30px; height:3px;
             background-color:#888888; vertical-align:middle; margin-right:6px;
             border-radius:2px;"></span>Rede original</div>"""
-        folium.Element(legend_html).add_to(mapa)
+        mapa.get_root().html.add_child(folium.Element(legend_html))
 
         if output_file:
             mapa.save(output_file)
