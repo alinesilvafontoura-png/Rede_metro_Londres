@@ -49,12 +49,15 @@ class Kruskal:
             return 1
         elif weight_type == 'distance':
             # Custo baseado na distância geográfica (minimiza km percorridos)
-            return self.network.calculate_distance(u, v)
+            dist = self.network.calculate_distance(u, v)
+            return dist if dist is not None else float('inf')
         elif weight_type == 'line_penalty':
             # Custo = distância + penalização fixa por aresta
             # Cada aresta tem uma penalização, incentivando a MST a ter menos arestas
             alpha = 5                                 # fator de penalização
             dist = self.network.calculate_distance(u, v)
+            if dist is None:
+                return float('inf')
             return dist + alpha
         return 1  # fallback
 
