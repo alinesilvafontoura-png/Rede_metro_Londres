@@ -5,7 +5,7 @@ from read_data import ReadData
 from visualize import Visualize
 
 
-class LondonNetwork:
+class LondonNetworkGraph:
     def __init__(self):
         self.station_info = {}  # dicionário com informações de cada estação
         self.graph = Graph()    # grafo que representa a rede
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     # pasta onde está este ficheiro
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    network = LondonNetwork()
+    network = LondonNetworkGraph()
     network.stations(os.path.join(BASE_DIR, 'data/stations.csv'))
     network.connections(os.path.join(BASE_DIR, 'data/connections.csv'))
 

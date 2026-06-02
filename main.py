@@ -1,5 +1,5 @@
 import os
-from LondonNetwork import LondonNetwork
+from LondonNetwork import LondonNetworkGraph
 
 
 def main():
@@ -7,7 +7,7 @@ def main():
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # pasta do projeto
 
-    metro = LondonNetwork()
+    metro = LondonNetworkGraph()
     metro.stations(os.path.join(BASE_DIR, 'data', 'stations.csv'))
     metro.connections(os.path.join(BASE_DIR, 'data', 'connections.csv'))
     print(

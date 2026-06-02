@@ -3,8 +3,8 @@ import folium
 
 class Visualize:
     def __init__(self, graph, station_info):
-        self.graph = graph                  # grafo partilhado com LondonNetwork
-        self.station_info = station_info    # dicionário partilhado com LondonNetwork
+        self.graph = graph                  # grafo partilhado com LondonNetworkGraph
+        self.station_info = station_info    # dicionário partilhado com LondonNetworkGraph
 
     def visualize(self, file_lines, output_file='visualizations/london_tube_map.html'):
         # carregar cores e nomes das linhas

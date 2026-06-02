@@ -1,5 +1,5 @@
 import os
-from LondonNetwork import LondonNetwork
+from LondonNetwork import LondonNetworkGraph
 
 
 class UnionFind:
@@ -168,7 +168,7 @@ class Kruskal:
 if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    network = LondonNetwork()
+    network = LondonNetworkGraph()
     network.stations(os.path.join(BASE_DIR, 'data', 'stations.csv'))
     network.connections(os.path.join(BASE_DIR, 'data', 'connections.csv'))
 

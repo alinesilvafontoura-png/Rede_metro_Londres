@@ -1,7 +1,7 @@
 import heapq  # fila de prioridade para aceder sempre ao nó de menor custo
 import os
 import networkx as nx  # biblioteca de grafos para a implementação alternativa do Dijkstra
-from LondonNetwork import LondonNetwork
+from LondonNetwork import LondonNetworkGraph
 
 
 class Dijkstra:
@@ -101,7 +101,8 @@ class Dijkstra:
                 elif weight_type == 'line_penalty':
                     # penalização por mudança de linha
                     alpha = 5
-                    penalty = alpha if (current_line is not None and edge_line != current_line) else 0
+                    penalty = alpha if (
+                        current_line is not None and edge_line != current_line) else 0
                     edge_cost = dist + penalty
 
                 else:
@@ -116,7 +117,7 @@ class Dijkstra:
                     # guarda antecessor
                     previous[neighbor] = vertex
                     # adiciona à queue
-                    heapq.heappush(queue,(new_cost, neighbor, edge_line))
+                    heapq.heappush(queue, (new_cost, neighbor, edge_line))
 
         # se não existir caminho
         if best_value[end] == float("inf"):
@@ -256,7 +257,7 @@ if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
     # construir rede
-    network = LondonNetwork()
+    network = LondonNetworkGraph()
 
     network.stations(
         os.path.join(BASE_DIR, 'data/stations.csv')

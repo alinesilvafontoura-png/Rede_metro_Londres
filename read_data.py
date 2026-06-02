@@ -1,10 +1,9 @@
 
 
-
 class ReadData:
     def __init__(self, graph, station_info):
-        self.graph = graph              # grafo partilhado com LondonNetwork
-        self.station_info = station_info  # dicionário partilhado com LondonNetwork
+        self.graph = graph              # grafo partilhado com LondonNetworkGraph
+        self.station_info = station_info  # dicionário partilhado com LondonNetworkGraph
 
     def stations(self, file_stations):
         with open(file_stations, 'r') as file:
@@ -16,9 +15,11 @@ class ReadData:
                 longitude = float(data[2])
                 name = data[3]
                 # adiciona o vértice ao grafo com as suas coordenadas e nome
-                self.graph.add_vertex(station_id, payload={'lat': latitude, 'lon': longitude, 'name': name})
+                self.graph.add_vertex(station_id, payload={
+                                      'lat': latitude, 'lon': longitude, 'name': name})
                 # guarda as informações da estação no dicionário
-                self.station_info[station_id] = {'name': name, 'lat': latitude, 'lon': longitude}
+                self.station_info[station_id] = {
+                    'name': name, 'lat': latitude, 'lon': longitude}
 
     def connections(self, file_connections):
         with open(file_connections, 'r') as file:
